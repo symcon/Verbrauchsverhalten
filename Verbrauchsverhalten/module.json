@@ -3,10 +3,7 @@
     "name": "Verbrauchsverhalten",
     "type": 3,
     "vendor": "",
-    "aliases":
-    [
-        
-    ],
+    "aliases": [],
     "url": "https://www.symcon.de",
     "parentRequirements": [],
     "childRequirements": [],

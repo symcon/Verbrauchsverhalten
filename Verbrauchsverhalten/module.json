@@ -1,0 +1,15 @@
+{
+    "id": "{EE2368AF-2347-4F90-31B8-861861F060DE}",
+    "name": "Verbrauchsverhalten",
+    "type": 3,
+    "vendor": "",
+    "aliases":
+    [
+        
+    ],
+    "url": "https://www.symcon.de",
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "VBV"
+}

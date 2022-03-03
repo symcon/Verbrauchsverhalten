@@ -1,0 +1,70 @@
+{
+    "status": [
+        {
+            "code": 200,
+            "icon": "error",
+            "caption": "Count of Values are equil"
+        },
+        {
+            "code": 201,
+            "icon": "error",
+            "caption": "A variable has to few values"
+        },
+        {
+            "code": 202,
+            "icon": "error",
+            "caption": "One of the Variable is not selected"
+        }
+    ],
+    "elements": [
+        {
+            "type": "SelectVariable",
+            "caption": "Outside temprature variable",
+            "name": "OutsideTemperatureID",
+            "requireLogging": 1
+        },
+        {
+            "type": "SelectVariable",
+            "caption": "Counter variable",
+            "name": "CounterID",
+            "requireLogging": 1
+        },
+        {
+            "type": "Select",
+            "caption": "Aggregation level",
+            "name": "AggregationLevel",
+            "options": [
+                {
+                    "caption": "Daily",
+                    "value": 1
+                },
+                {
+                    "caption": "Weekly",
+                    "value": 2
+                },
+                {
+                    "caption": "Monthly",
+                    "value": 3
+                },
+                {
+                    "caption": "Yearly",
+                    "value": 4
+                }
+            ]
+        },
+        {
+            "type": "NumberSpinner",
+            "caption": "Interval",
+            "name": "Interval",
+            "suffix": "Minuten",
+            "min": 0
+        }
+    ],
+    "actions": [
+        {
+            "type": "Button",
+            "caption": "Calculate",
+            "onClick": "VBV_setData($id);"
+        }
+    ]
+}

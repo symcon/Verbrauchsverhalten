@@ -1,0 +1,19 @@
+{
+    "translations": {
+        "de": {
+            "Outside temprature variable": "Variable für die Außentemperatur",
+            "Counter variable": "Variable für den Zähler",
+            "Aggregation level": "Aggregation Stufe",
+            "Daily": "Täglich",
+            "Weekly": "Wöchendlich",
+            "Monthly": "Monatlich",
+            "Yearly": "Jährlich",
+            "Calculate": "Berechnen",
+            "One of the Variable is not selected": "Eine der Variablen ist nicht gesetzt",
+            "A variable has to few values": "Eine Variable hat zu wenig Werte",
+            "Prediction of the current Period": "Erwartung der jetzigen Periode",
+            "Prediction of the last Period": "Erwartung der letzten Periode",
+            "Procent": "Prozent"
+        }
+    }
+}

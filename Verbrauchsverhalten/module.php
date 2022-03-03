@@ -20,7 +20,6 @@ declare(strict_types=1);
             $this->RegisterPropertyInteger('OutsideTemperatureID', 0);
             //coutner is the y
             $this->RegisterPropertyInteger('CounterID', 0);
-            
 
             //variables
             $this->RegisterVariableFloat('CurrentPeriod', $this->Translate('Prediction of the current Period'));
@@ -54,7 +53,7 @@ declare(strict_types=1);
             if ($this->GetTimerInterval('UpdateCalculationVBV') < ($this->ReadPropertyInteger('Interval') * 1000 * 60)) {
                 $this->SetTimerInterval('UpdateCalculationVBV', $this->ReadPropertyInteger('Interval') * 1000 * 60);
             }
-            
+
             $archiveID = IPS_GetInstanceListByModuleID('{43192F0B-135B-4CE7-A0A7-1475603F3060}')[0];
 
             $aggregationLevel = $this->ReadPropertyInteger('AggregationLevel');
@@ -138,7 +137,6 @@ declare(strict_types=1);
             $currentX = AC_GetAggregatedValues($archiveID, $XID, $aggregationLevel, $startTimePeriod, $endTimePeriod, 0)[0];
             $predictionPeriod = $m * $currentX['Avg'] + $b;
 
-            
             $currentY = AC_GetAggregatedValues($archiveID, $YID, $aggregationLevel, $startTimePeriod, $endTimePeriod, 0)[0];
             $predictionFullPeriod = $currentY['Avg'] / $currentY['Duration'] * ($endTimePeriod - $startTimePeriod);
             $procent = ($predictionFullPeriod / $predictionPeriod) * 100;

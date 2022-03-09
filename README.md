@@ -6,5 +6,5 @@
 
 Folgende Module beinhaltet das Verbrauchsverhalten Repository:
 
-- __Verbrauchsverhalten__ ([Dokumentation](Verbrauchsverhalten))
+- __Verbrauchsverhalten__ ([Dokumentation](Verbrauchsverhalten))  
     Das Verbrauchsverhalten-Modul zeigt den erwarteten Verbrauch an.

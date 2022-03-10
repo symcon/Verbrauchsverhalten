@@ -24,7 +24,7 @@ declare(strict_types=1);
             //variables
             $this->RegisterVariableFloat('CurrentPeriod', $this->Translate('Prediction of the current Period'));
             $this->RegisterVariableFloat('LastPeriod', $this->Translate('Prediction of the last Period'));
-            $this->RegisterVariableFloat('Procent', $this->Translate('Procent'));
+            $this->RegisterVariableFloat('Percent', $this->Translate('Percent'));
 
             //Timer
             $this->RegisterPropertyInteger('Interval', 5);
@@ -91,7 +91,7 @@ declare(strict_types=1);
 
             //current period
             $this->SetValue('CurrentPeriod', $list[0]);
-            $this->SetValue('Procent', $list[1]);
+            $this->SetValue('Percent', $list[1]);
 
             //last period
             $list = $this->calculate($aggregationLevel, $outsideID, $counterID, $startTimeLastPeriod, $startTimeThisPeriod);
@@ -139,8 +139,8 @@ declare(strict_types=1);
 
             $currentY = AC_GetAggregatedValues($archiveID, $YID, $aggregationLevel, $startTimePeriod, $endTimePeriod, 0)[0];
             $predictionFullPeriod = $currentY['Avg'] / $currentY['Duration'] * ($endTimePeriod - $startTimePeriod);
-            $procent = ($predictionFullPeriod / $predictionPeriod) * 100;
-            return [$predictionPeriod, $procent];
+            $percent = ($predictionFullPeriod / $predictionPeriod) * 100;
+            return [$predictionPeriod, $percent];
         }
 
         private function linearRegression(array $valuesX, array $valuesY)

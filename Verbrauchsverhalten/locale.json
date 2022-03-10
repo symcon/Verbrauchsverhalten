@@ -13,7 +13,7 @@
             "A variable has to few values": "Eine Variable hat zu wenig Werte",
             "Prediction of the current Period": "Erwartung der jetzigen Periode",
             "Prediction of the last Period": "Erwartung der letzten Periode",
-            "Procent": "Prozent"
+            "Percent": "Prozent"
         }
     }
 }

@@ -16,6 +16,7 @@ declare(strict_types=1);
 
             //Properties
             $this->RegisterPropertyInteger('AggregationLevel', 1);
+            $this->RegisterPropertyInteger('Limit', 0);
             //outside temperature is the x
             $this->RegisterPropertyInteger('OutsideTemperatureID', 0);
             //coutner is the y
@@ -23,7 +24,9 @@ declare(strict_types=1);
 
             //variables
             $this->RegisterVariableFloat('CurrentPeriod', $this->Translate('Prediction of the current Period'));
+            $this->RegisterVariableFloat('CurrentValue', $this->Translate('Value of the current Period'));
             $this->RegisterVariableFloat('LastPeriod', $this->Translate('Prediction of the last Period'));
+            $this->RegisterVariableFloat('LastValue', $this->Translate('Value of the last Period'));
             $this->RegisterVariableFloat('Percent', $this->Translate('Percent'));
 
             //Timer
@@ -41,6 +44,7 @@ declare(strict_types=1);
 
         public function setData()
         {
+            $this->SetStatus(102);
             $outsideID = $this->ReadPropertyInteger('OutsideTemperatureID');
             $counterID = $this->ReadPropertyInteger('CounterID');
 
@@ -87,43 +91,54 @@ declare(strict_types=1);
                     $startTimeLastPeriod = 0;
             }
 
-            $list = $this->calculate($aggregationLevel, $outsideID, $counterID, $startTimeThisPeriod, $endTimeThisPeriod);
-
             //current period
+            $list = $this->calculate($aggregationLevel, $outsideID, $counterID, $startTimeThisPeriod, $endTimeThisPeriod);
             $this->SetValue('CurrentPeriod', $list[0]);
             $this->SetValue('Percent', $list[1]);
+            $this->SetValue('CurrentValue', $list[2]);
 
             //last period
             $list = $this->calculate($aggregationLevel, $outsideID, $counterID, $startTimeLastPeriod, $startTimeThisPeriod);
             $this->SetValue('LastPeriod', $list[0]);
+            $this->SetValue('LastValue', $list[2]);
         }
 
         private function calculate(int $aggregationLevel, int $XID, int $YID, int $startTimePeriod, int $endTimePeriod)
         {
             $archiveID = IPS_GetInstanceListByModuleID('{43192F0B-135B-4CE7-A0A7-1475603F3060}')[0];
+            $limit = $this->ReadPropertyInteger('Limit');
+            if ($limit == 1) {
+                //The limit must be higher than one or zero for all possible datasets
+                $this->SetStatus(200);
+            }
 
             //get xValues
-            $rawX = AC_GetAggregatedValues($archiveID, $XID, $aggregationLevel, 0, $startTimePeriod - 1, 0);
+            $rawX = AC_GetAggregatedValues($archiveID, $XID, $aggregationLevel, 0, $startTimePeriod, 0);
             $xVarValues = [];
             foreach ($rawX as $dataset) {
                 $xVarValues[] = $dataset['Avg'];
             }
-            $valuesX = array_reverse($xVarValues);
 
             //get yValues
-            $rawY = AC_GetAggregatedValues($archiveID, $YID, $aggregationLevel, 0, $startTimePeriod - 1, 0);
+            $rawY = AC_GetAggregatedValues($archiveID, $YID, $aggregationLevel, 0, $startTimePeriod, 0);
             $yVarValues = [];
             foreach ($rawY as $dataset) {
                 $yVarValues[] = $dataset['Avg'];
             }
+
+            //cut the Arrays for equal amount
+            if (count($yVarValues) > count($xVarValues)) {
+                $yVarValues = array_slice($yVarValues, 0, count($xVarValues));
+            } else {
+                $xVarValues = array_slice($xVarValues, 0, count($yVarValues));
+            }
+
+            //reverse Arrays for regression
             $valuesY = array_reverse($yVarValues);
+            $valuesX = array_reverse($xVarValues);
 
             //Valid the values
-            if (count($valuesX) != count($valuesY)) {
-                $this->SetStatus(200);
-                // The amount of values is not the same for both axis
-                return null;
-            } elseif (count($valuesY) <= 1) {
+            if (count($valuesY) <= 1) {
                 $this->SetStatus(201);
                 // The count of values is zero or one which leads to an error in the linear regression
                 return null;
@@ -140,7 +155,8 @@ declare(strict_types=1);
             $currentY = AC_GetAggregatedValues($archiveID, $YID, $aggregationLevel, $startTimePeriod, $endTimePeriod, 0)[0];
             $predictionFullPeriod = $currentY['Avg'] / $currentY['Duration'] * ($endTimePeriod - $startTimePeriod);
             $percent = ($predictionFullPeriod / $predictionPeriod) * 100;
-            return [$predictionPeriod, $percent];
+
+            return [$predictionPeriod, $percent, $currentY['Avg']];
         }
 
         private function linearRegression(array $valuesX, array $valuesY)

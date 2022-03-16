@@ -3,7 +3,7 @@
         {
             "code": 200,
             "icon": "error",
-            "caption": "Count of Values are equil"
+            "caption": "The Limit must be zero for all possible data sets or higher than one"
         },
         {
             "code": 201,
@@ -51,6 +51,12 @@
                     "value": 4
                 }
             ]
+        },
+        {
+            "type": "NumberSpinner",
+            "caption": "Limit of the amount of data sets",
+            "name": "Limit",
+            "min": 0
         },
         {
             "type": "NumberSpinner",

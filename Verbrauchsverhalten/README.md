@@ -36,7 +36,8 @@ Name                         | Beschreibung
 Variable für Außentemperatur | Variable für die X-Achse 
 Variable für den Zähler      | Variable für die Y-Achse
 Aggregation Stufe            | Setzt in welchem Zeitraum die Daten sein sollen
-Interval                     | Setzt wie oft die Variablen gesetzt werden sollen
+Limit                        | Setzt wie viele Datensätze für die Regression genutzt werden sollen
+Interval                     | Setzt in welchen Zeitraum die Variablen neu berechnet werden sollen
 Berechnen                    | Button um die Variablen manuell neu zu setzen
 
 ### 5. Statusvariablen
@@ -49,6 +50,9 @@ Name                           | Typ   | Beschreibung
 ------------------------------ | ----- | ------------
 Erwartung der jetzigen Periode | float | Zeigt den erwarteten Verbrauch der laufenden Periode an
 Erwartung der letzten Periode  | float | Zeigt den erwarteten Verbrauch der letzten Periode an
+Wert der aktuellen Periode     | float | Zeigt den Wert der laufenden Periode an
+Wert der letzten Periode       | float | Zeigt den Wert der letzten Periode an
+Prozent                        | float | Zeigt in wie weit sich der Tatsächliche Verbrauch vom erwarteten Wert prozentual unterscheiden
 
 ### 6. WebFront
 

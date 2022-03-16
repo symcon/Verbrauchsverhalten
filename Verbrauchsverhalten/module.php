@@ -23,11 +23,12 @@ declare(strict_types=1);
             $this->RegisterPropertyInteger('CounterID', 0);
 
             //variables
-            $this->RegisterVariableFloat('CurrentPeriod', $this->Translate('Prediction of the current Period'));
-            $this->RegisterVariableFloat('CurrentValue', $this->Translate('Value of the current Period'));
-            $this->RegisterVariableFloat('LastPeriod', $this->Translate('Prediction of the last Period'));
-            $this->RegisterVariableFloat('LastValue', $this->Translate('Value of the last Period'));
-            $this->RegisterVariableFloat('Percent', $this->Translate('Percent'));
+            $this->RegisterVariableFloat('CurrentPeriod', $this->Translate('Prediction of the current Period'), '', 0);
+            $this->RegisterVariableFloat('CurrentValue', $this->Translate('Value of the current Period'), '', 0);
+            $this->RegisterVariableFloat('LastPeriod', $this->Translate('Prediction of the last Period'), '', 1);
+            $this->RegisterVariableFloat('LastValue', $this->Translate('Value of the last Period'), '', 1);
+            $this->RegisterVariableFloat('CurrentPercent', $this->Translate('Percent of the current Period'), '', 0);
+            $this->RegisterVariableFloat('LastPercent', $this->Translate('Percent of the last Period'), '', 1);
 
             //Timer
             $this->RegisterPropertyInteger('Interval', 5);
@@ -39,6 +40,21 @@ declare(strict_types=1);
             // Diese Zeile nicht löschen
             parent::ApplyChanges();
 
+            //Change Profile
+            $id = $this->ReadPropertyInteger('CounterID');
+            if ($id != 0) {
+                if (IPS_GetVariable($id)['VariableCustomProfile'] == '') {
+                    $profile = IPS_GetVariable($id)['VariableProfile'];
+                } else {
+                    $profile = IPS_GetVariable($id)['VariableCustomProfile'];
+                }
+                $this->MaintainVariable('CurrentPeriod', $this->Translate('Prediction of the current Period'), 2, $profile, 0, true);
+                $this->MaintainVariable('CurrentValue', $this->Translate('Value of the current Period'), 2, $profile, 0, true);
+                $this->MaintainVariable('CurrentPercent', $this->Translate('Percent of the current Period'), 2, $profile, 0, true);
+                $this->MaintainVariable('LastPeriod', $this->Translate('Prediction of the last Period'), 2, $profile, 1, true);
+                $this->MaintainVariable('LastValue', $this->Translate('Value of the last Period'), 2, $profile, 1, true);
+                $this->MaintainVariable('LastPercent', $this->Translate('Percent of the last Period'), 2, $profile, 1, true);
+            }
             $this->setData();
         }
 
@@ -94,13 +110,14 @@ declare(strict_types=1);
             //current period
             $list = $this->calculate($aggregationLevel, $outsideID, $counterID, $startTimeThisPeriod, $endTimeThisPeriod);
             $this->SetValue('CurrentPeriod', $list[0]);
-            $this->SetValue('Percent', $list[1]);
+            $this->SetValue('CurrentPercent', $list[1]);
             $this->SetValue('CurrentValue', $list[2]);
 
             //last period
             $list = $this->calculate($aggregationLevel, $outsideID, $counterID, $startTimeLastPeriod, $startTimeThisPeriod);
             $this->SetValue('LastPeriod', $list[0]);
             $this->SetValue('LastValue', $list[2]);
+            $this->SetValue('LastPercent', $list[1]);
         }
 
         private function calculate(int $aggregationLevel, int $XID, int $YID, int $startTimePeriod, int $endTimePeriod)
@@ -113,14 +130,14 @@ declare(strict_types=1);
             }
 
             //get xValues
-            $rawX = AC_GetAggregatedValues($archiveID, $XID, $aggregationLevel, 0, $startTimePeriod, 0);
+            $rawX = AC_GetAggregatedValues($archiveID, $XID, $aggregationLevel, 0, $startTimePeriod, $limit);
             $xVarValues = [];
             foreach ($rawX as $dataset) {
                 $xVarValues[] = $dataset['Avg'];
             }
 
             //get yValues
-            $rawY = AC_GetAggregatedValues($archiveID, $YID, $aggregationLevel, 0, $startTimePeriod, 0);
+            $rawY = AC_GetAggregatedValues($archiveID, $YID, $aggregationLevel, 0, $startTimePeriod, $limit);
             $yVarValues = [];
             foreach ($rawY as $dataset) {
                 $yVarValues[] = $dataset['Avg'];
@@ -152,11 +169,13 @@ declare(strict_types=1);
             $currentX = AC_GetAggregatedValues($archiveID, $XID, $aggregationLevel, $startTimePeriod, $endTimePeriod, 0)[0];
             $predictionPeriod = $m * $currentX['Avg'] + $b;
 
-            $currentY = AC_GetAggregatedValues($archiveID, $YID, $aggregationLevel, $startTimePeriod, $endTimePeriod, 0)[0];
+            $currentY = AC_GetAggregatedValues($archiveID, $YID, $aggregationLevel, $startTimePeriod, $endTimePeriod - 1, 0)[0];
             $predictionFullPeriod = $currentY['Avg'] / $currentY['Duration'] * ($endTimePeriod - $startTimePeriod);
             $percent = ($predictionFullPeriod / $predictionPeriod) * 100;
 
-            return [$predictionPeriod, $percent, $currentY['Avg']];
+            $currentY = $currentY['Avg'] * $currentY['Duration'];
+
+            return [$predictionPeriod, $percent, $currentY];
         }
 
         private function linearRegression(array $valuesX, array $valuesY)

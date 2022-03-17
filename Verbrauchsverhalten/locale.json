@@ -3,22 +3,23 @@
         "de": {
             "Outside temprature variable": "Variable für die Außentemperatur",
             "Counter variable": "Variable für den Zähler",
-            "Aggregation level": "Aggregation Stufe",
+            "Period level": "Perioden Stufe",
             "Daily": "Täglich",
             "Weekly": "Wöchendlich",
             "Monthly": "Monatlich",
             "Yearly": "Jährlich",
+            "Interval": "Intervall",
             "Calculate": "Berechnen",
             "One of the Variable is not selected": "Eine der Variablen ist nicht gesetzt",
-            "A variable has to few values": "Eine Variable hat zu wenig Werte",
+            "A variable has to few values or the limit is one": "Eine Variable hat zu wenig Werte oder das Limit ist eins",
+            "The period level is not define": "Die Periodenlänge ist nicht definiert",
             "Prediction of the current Period": "Erwartung der aktuellen Periode",
             "Prediction of the last Period": "Erwartung der letzten Periode",
             "Percent of the current Period": "Prozent der aktuellen Periode",
             "Percent of the last Period": "Prozent der letzten Periode",
             "Value of the current Period": "Wert der aktuellen Periode",
             "Value of the last Period": "Wert der letzten Periode",
-            "Limit of the amount of data sets": "Limit der Datensätze",
-            "The Limit must be zero for all possible data sets or higher than one": "Das Limit muss null für alle möglichen Datensätze oder höher als eins sein"
+            "Limit of the amount of data sets": "Limit der Datensätze"
         }
     }
 }

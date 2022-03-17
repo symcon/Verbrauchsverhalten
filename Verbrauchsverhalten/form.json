@@ -3,12 +3,12 @@
         {
             "code": 200,
             "icon": "error",
-            "caption": "The Limit must be zero for all possible data sets or higher than one"
+            "caption": "The period level is not define"
         },
         {
             "code": 201,
             "icon": "error",
-            "caption": "A variable has to few values"
+            "caption": "A variable has to few values or the limit is one"
         },
         {
             "code": 202,
@@ -31,8 +31,8 @@
         },
         {
             "type": "Select",
-            "caption": "Aggregation level",
-            "name": "AggregationLevel",
+            "caption": "Period level",
+            "name": "PeriodLevel",
             "options": [
                 {
                     "caption": "Daily",
@@ -70,7 +70,7 @@
         {
             "type": "Button",
             "caption": "Calculate",
-            "onClick": "VBV_setData($id);"
+            "onClick": "VBV_UpdateCalculation($id);"
         }
     ]
 }

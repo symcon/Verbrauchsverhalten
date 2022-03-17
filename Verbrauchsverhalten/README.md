@@ -1,5 +1,5 @@
 # Verbrauchsverhalten
-Das Modul errechnet durch Lineare Regression eine warscheinlichen Verbrauch. 
+Das Modul errechnet den wahrscheinlichen Verbrauch mit einer Außentemperatur-Variable und einer Zähler-Variable.
 
 ### Inhaltsverzeichnis
 
@@ -22,7 +22,7 @@ Das Modul errechnet durch Lineare Regression eine warscheinlichen Verbrauch.
 ### 3. Software-Installation
 
 * Über den Module Store das 'Verbrauchsverhalten'-Modul installieren.
-* Alternativ über das Module Control folgende URL hinzufügen
+* Alternativ über das Module Control folgende URL hinzufügen `https://github.com/symcon/Verbrauchsverhalten`
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
@@ -33,11 +33,11 @@ __Konfigurationsseite__:
 
 Name                         | Beschreibung
 ---------------------------- | ------------------
-Variable für Außentemperatur | Variable für die X-Achse 
-Variable für den Zähler      | Variable für die Y-Achse
-Aggregation Stufe            | Setzt in welchem Zeitraum die Daten sein sollen
+Variable für Außentemperatur | Variable für die Außentemperatur
+Variable für den Zähler      | Variable für den Zähler
+Perioden Stufe               | Setzt in welchem Zeitraum die Daten sein sollen
 Limit                        | Setzt wie viele Datensätze für die Regression genutzt werden sollen
-Interval                     | Setzt in welchen Zeitraum die Variablen neu berechnet werden sollen
+Intervall                    | Setzt in welchen Zeitraum die Variablen neu berechnet werden sollen
 Berechnen                    | Button um die Variablen manuell neu zu setzen
 
 ### 5. Statusvariablen
@@ -48,11 +48,12 @@ Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzeln
 
 Name                           | Typ   | Beschreibung
 ------------------------------ | ----- | ------------
-Erwartung der jetzigen Periode | float | Zeigt den erwarteten Verbrauch der laufenden Periode an
+Erwartung der aktuelle Periode | float | Zeigt den erwarteten Verbrauch der laufenden Periode an
 Erwartung der letzten Periode  | float | Zeigt den erwarteten Verbrauch der letzten Periode an
 Wert der aktuellen Periode     | float | Zeigt den Wert der laufenden Periode an
 Wert der letzten Periode       | float | Zeigt den Wert der letzten Periode an
-Prozent                        | float | Zeigt in wie weit sich der Tatsächliche Verbrauch vom erwarteten Wert prozentual unterscheiden
+Prozent der aktuellen Periode  | float | Zeigt in wie weit sich der Tatsächliche Verbrauch vom erwarteten Wert prozentual unterscheiden
+Prozent der letzten Periode    | float | Zeigt in wie weit sich der Tatsächliche Verbrauch vom erwarteten Wert prozentual unterscheiden
 
 ### 6. WebFront
 

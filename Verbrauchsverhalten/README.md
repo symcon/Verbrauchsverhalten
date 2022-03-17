@@ -1,5 +1,5 @@
 # Verbrauchsverhalten
-Das Modul errechnet den wahrscheinlichen Verbrauch mit einer Außentemperatur-Variable und einer Zähler-Variable.
+Das Modul errechnet den wahrscheinlichen Verbrauch für diese Periode auf Basis einer Außentemperatur-Variable und einer Zähler-Variable mithilfe der Linearen Regression. Je mehr Werte für die Außentemperatur und den Zähler verfügbar sind, desto genauer kann der erwartete Verbrauch ermittelt werden.
 
 ### Inhaltsverzeichnis
 
@@ -35,10 +35,10 @@ Name                         | Beschreibung
 ---------------------------- | ------------------
 Variable für Außentemperatur | Variable für die Außentemperatur
 Variable für den Zähler      | Variable für den Zähler
-Perioden Stufe               | Setzt in welchem Zeitraum die Daten sein sollen
-Limit                        | Setzt wie viele Datensätze für die Regression genutzt werden sollen
-Intervall                    | Setzt in welchen Zeitraum die Variablen neu berechnet werden sollen
-Berechnen                    | Button um die Variablen manuell neu zu setzen
+Periode                      | Zeitraum für den die Berechnung durchgeführt werden soll
+Limit                        | Maximale Anzahl der Datensätze die für die Regression genutzt werden sollen. 0 = Keine Limitierung
+Intervall                    | Zeitraum in dem die Variable neu berechnet werden soll
+Berechnen                    | Button, um die Variablen neu zu berechnen
 
 ### 5. Statusvariablen
 
@@ -46,14 +46,16 @@ Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzeln
 
 #### Statusvariablen
 
-Name                           | Typ   | Beschreibung
------------------------------- | ----- | ------------
-Erwartung der aktuelle Periode | float | Zeigt den erwarteten Verbrauch der laufenden Periode an
-Erwartung der letzten Periode  | float | Zeigt den erwarteten Verbrauch der letzten Periode an
-Wert der aktuellen Periode     | float | Zeigt den Wert der laufenden Periode an
-Wert der letzten Periode       | float | Zeigt den Wert der letzten Periode an
-Prozent der aktuellen Periode  | float | Zeigt in wie weit sich der Tatsächliche Verbrauch vom erwarteten Wert prozentual unterscheiden
-Prozent der letzten Periode    | float | Zeigt in wie weit sich der Tatsächliche Verbrauch vom erwarteten Wert prozentual unterscheiden
+Name                             | Typ   | Beschreibung
+--------------------------------- | ----- | ------------
+Erwartung der aktuelle Periode    | float | Zeigt den erwarteten Verbrauch auf Basis der Außentemperatur der laufenden Periode an
+Erwartung der letzten Periode     | float | Zeigt den erwarteten Verbrauch auf Basis der Außentemperatur der letzten Periode an
+Hochrechnung der aktuelle Periode | float | Zeigt den hochgerechneten Verbrauch der laufenden Periode an
+Hochrechnung der letzten Periode  | float | Zeigt den hochgerechneten Verbrauch der letzten Periode an
+Wert der aktuellen Periode        | float | Zeigt den aktuellen Verbrauch der laufenden Periode an
+Wert der letzten Periode          | float | Zeigt den Verbrauch der letzten Periode an
+Prozent der aktuellen Periode     | float | Zeigt in wie weit sich der hochgerechnete Verbrauch vom erwarteten Wert prozentual unterscheiden
+Prozent der letzten Periode       | float | Zeigt in wie weit sich der hochgerechnete Verbrauch vom erwarteten Wert prozentual unterscheiden
 
 ### 6. WebFront
 

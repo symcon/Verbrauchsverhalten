@@ -50,10 +50,10 @@ declare(strict_types=1);
                 }
                 $this->MaintainVariable('CurrentPeriod', $this->Translate('Prediction of the current Period'), 2, $profile, 0, true);
                 $this->MaintainVariable('CurrentValue', $this->Translate('Value of the current Period'), 2, $profile, 0, true);
-                $this->MaintainVariable('CurrentPercent', $this->Translate('Percent of the current Period'), 2, $profile, 0, true);
+                $this->MaintainVariable('CurrentPercent', $this->Translate('Percent of the current Period'), 2, '~Valve.F', 0, true);
                 $this->MaintainVariable('LastPeriod', $this->Translate('Prediction of the last Period'), 2, $profile, 1, true);
                 $this->MaintainVariable('LastValue', $this->Translate('Value of the last Period'), 2, $profile, 1, true);
-                $this->MaintainVariable('LastPercent', $this->Translate('Percent of the last Period'), 2, $profile, 1, true);
+                $this->MaintainVariable('LastPercent', $this->Translate('Percent of the last Period'), 2, '~Valve.F', 1, true);
             }
             $this->setData();
         }
@@ -109,15 +109,15 @@ declare(strict_types=1);
 
             //current period
             $list = $this->calculate($aggregationLevel, $outsideID, $counterID, $startTimeThisPeriod, $endTimeThisPeriod);
-            $this->SetValue('CurrentPeriod', $list[0]);
-            $this->SetValue('CurrentPercent', $list[1]);
-            $this->SetValue('CurrentValue', $list[2]);
+            $this->SetValue('CurrentPeriod', $list['prediction']);
+            $this->SetValue('CurrentPercent', $list['percent']);
+            $this->SetValue('CurrentValue', $list['current']);
 
             //last period
             $list = $this->calculate($aggregationLevel, $outsideID, $counterID, $startTimeLastPeriod, $startTimeThisPeriod);
-            $this->SetValue('LastPeriod', $list[0]);
-            $this->SetValue('LastValue', $list[2]);
-            $this->SetValue('LastPercent', $list[1]);
+            $this->SetValue('LastPeriod', $list['prediction']);
+            $this->SetValue('LastPercent', $list['percent']);
+            $this->SetValue('LastValue', $list['current']);
         }
 
         private function calculate(int $aggregationLevel, int $XID, int $YID, int $startTimePeriod, int $endTimePeriod)
@@ -173,9 +173,12 @@ declare(strict_types=1);
             $predictionFullPeriod = $currentY['Avg'] / $currentY['Duration'] * ($endTimePeriod - $startTimePeriod);
             $percent = ($predictionFullPeriod / $predictionPeriod) * 100;
 
-            $currentY = $currentY['Avg'] * $currentY['Duration'];
+            $currentY = $currentY['Avg'];
 
-            return [$predictionPeriod, $percent, $currentY];
+            return [
+                'prediction'     => $predictionPeriod,
+                'percent'        => $percent,
+                'current'        => $currentY];
         }
 
         private function linearRegression(array $valuesX, array $valuesY)

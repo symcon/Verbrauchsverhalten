@@ -31,23 +31,23 @@
         },
         {
             "type": "Select",
-            "caption": "Period level",
-            "name": "PeriodLevel",
+            "caption": "Period",
+            "name": "Period",
             "options": [
                 {
-                    "caption": "Daily",
+                    "caption": "Day",
                     "value": 1
                 },
                 {
-                    "caption": "Weekly",
+                    "caption": "Week",
                     "value": 2
                 },
                 {
-                    "caption": "Monthly",
+                    "caption": "Month",
                     "value": 3
                 },
                 {
-                    "caption": "Yearly",
+                    "caption": "Year",
                     "value": 4
                 }
             ]

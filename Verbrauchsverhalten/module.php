@@ -15,18 +15,10 @@ declare(strict_types=1);
             parent::Create();
 
             //Properties
-            $this->RegisterPropertyInteger('PeriodLevel', 1);
+            $this->RegisterPropertyInteger('Period', 1);
             $this->RegisterPropertyInteger('Limit', 0);
             $this->RegisterPropertyInteger('OutsideTemperatureID', 0);
             $this->RegisterPropertyInteger('CounterID', 0);
-
-            //Variables
-            $this->RegisterVariableFloat('CurrentPeriod', $this->Translate('Prediction of the current Period'), '', 0);
-            $this->RegisterVariableFloat('CurrentValue', $this->Translate('Value of the current Period'), '', 0);
-            $this->RegisterVariableFloat('CurrentPercent', $this->Translate('Percent of the current Period'), '', 0);
-            $this->RegisterVariableFloat('LastPeriod', $this->Translate('Prediction of the last Period'), '', 1);
-            $this->RegisterVariableFloat('LastValue', $this->Translate('Value of the last Period'), '', 1);
-            $this->RegisterVariableFloat('LastPercent', $this->Translate('Percent of the last Period'), '', 1);
 
             //Timer
             $this->RegisterPropertyInteger('Interval', 5);
@@ -52,12 +44,14 @@ declare(strict_types=1);
             }
 
             //Variables
-            $this->RegisterVariableFloat('CurrentPeriod', $this->Translate('Prediction of the current Period'), $profile, 0);
-            $this->RegisterVariableFloat('CurrentValue', $this->Translate('Value of the current Period'), $profile, 0);
-            $this->RegisterVariableFloat('CurrentPercent', $this->Translate('Percent of the current Period'), '~Valve.F', 0);
-            $this->RegisterVariableFloat('LastPeriod', $this->Translate('Prediction of the last Period'), $profile, 1);
-            $this->RegisterVariableFloat('LastValue', $this->Translate('Value of the last Period'), $profile, 1);
-            $this->RegisterVariableFloat('LastPercent', $this->Translate('Percent of the last Period'), '~Valve.F', 1);
+            $this->RegisterVariableFloat('CurrentValue', $this->Translate('Value of the current Period'), $profile, 1);
+            $this->RegisterVariableFloat('CurrentForecast', $this->Translate('Forecast of the current Period'), $profile, 2);
+            $this->RegisterVariableFloat('CurrentPrediction', $this->Translate('Prediction of the current Period'), $profile, 3);
+            $this->RegisterVariableFloat('CurrentPercent', $this->Translate('Percent of the current Period'), '~Valve.F', 4);
+            $this->RegisterVariableFloat('LastValue', $this->Translate('Value of the last Period'), $profile, 5);
+            $this->RegisterVariableFloat('LastForecast', $this->Translate('Forecast of the last Period'), $profile, 6);
+            $this->RegisterVariableFloat('LastPrediction', $this->Translate('Prediction of the last Period'), $profile, 7);
+            $this->RegisterVariableFloat('LastPercent', $this->Translate('Percent of the last Period'), '~Valve.F', 8);
 
             $this->SetTimerInterval('UpdateCalculation', $this->ReadPropertyInteger('Interval') * 1000 * 60);
 
@@ -79,7 +73,7 @@ declare(strict_types=1);
 
             $archiveID = IPS_GetInstanceListByModuleID('{43192F0B-135B-4CE7-A0A7-1475603F3060}')[0];
 
-            $aggregationLevel = $this->ReadPropertyInteger('PeriodLevel');
+            $aggregationLevel = $this->ReadPropertyInteger('Period');
             switch ($aggregationLevel) {
                 case LVL_DAY:
                     $startTimeThisPeriod = strtotime('today 00:00:00', time());
@@ -117,7 +111,8 @@ declare(strict_types=1);
                 //status is set from calculate
                 return;
             }
-            $this->SetValue('CurrentPeriod', $list['prediction']);
+            $this->SetValue('CurrentPrediction', $list['prediction']);
+            $this->SetValue('CurrentForecast', $list['forecast']);
             $this->SetValue('CurrentPercent', $list['percent']);
             $this->SetValue('CurrentValue', $list['current']);
 
@@ -128,7 +123,8 @@ declare(strict_types=1);
                 //status is set from calculate
                 return;
             }
-            $this->SetValue('LastPeriod', $list['prediction']);
+            $this->SetValue('LastPrediction', $list['prediction']);
+            $this->SetValue('LastForecast', $list['forecast']);
             $this->SetValue('LastPercent', $list['percent']);
             $this->SetValue('LastValue', $list['current']);
         }
@@ -172,23 +168,29 @@ declare(strict_types=1);
 
             //X = Outside,  Y = Counter
             $parameter = $this->linearRegression($valuesOutside, $valuesCounter);
-            $b = $parameter['b'];
-            $m = $parameter['m'];
 
             //Predict the Consumption
             $currentOutside = AC_GetAggregatedValues($archiveID, $outsideID, $aggregationLevel, $startTimePeriod, $endTimePeriod - 1, 1)[0];
-            $predictionPeriod = $m * $currentOutside['Avg'] + $b;
+            $predictionPeriod = $parameter['m'] * $currentOutside['Avg'] + $parameter['b'];
 
             $currentCounter = AC_GetAggregatedValues($archiveID, $counterID, $aggregationLevel, $startTimePeriod, $endTimePeriod - 1, 1)[0];
-            $predictionFullPeriod = $currentCounter['Avg'] / $currentCounter['Duration'] * ($endTimePeriod - $startTimePeriod);
-            $percent = ($predictionFullPeriod / $predictionPeriod) * 100;
+            $forecastPeriod = $currentCounter['Avg'] / $currentCounter['Duration'] * ($endTimePeriod - $startTimePeriod);
 
-            $currentCounter = $currentCounter['Avg'];
+            $percent = ($forecastPeriod / $predictionPeriod) * 100;
+
+            //Print some debug values
+            $this->SendDebug('Values', count($valuesOutside), 0);
+            $this->SendDebug('OutsideTemperature', $currentOutside['Avg'], 0);
+            $this->SendDebug('B', $parameter['b'], 0);
+            $this->SendDebug('M', $parameter['m'], 0);
+            $this->SendDebug('Counter', $currentCounter['Avg'], 0);
+            $this->SendDebug('Forecast', $forecastPeriod, 0);
 
             return [
                 'prediction'     => $predictionPeriod,
+                'forecast'       => $forecastPeriod,
                 'percent'        => $percent,
-                'current'        => $currentCounter,
+                'current'        => $currentCounter['Avg'],
             ];
         }
 

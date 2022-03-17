@@ -15,18 +15,10 @@ declare(strict_types=1);
             parent::Create();
 
             //Properties
-            $this->RegisterPropertyInteger('PeriodLevel', 1);
+            $this->RegisterPropertyInteger('Period', 1);
             $this->RegisterPropertyInteger('Limit', 0);
             $this->RegisterPropertyInteger('OutsideTemperatureID', 0);
             $this->RegisterPropertyInteger('CounterID', 0);
-
-            //Variables
-            $this->RegisterVariableFloat('CurrentPeriod', $this->Translate('Prediction of the current Period'), '', 0);
-            $this->RegisterVariableFloat('CurrentValue', $this->Translate('Value of the current Period'), '', 0);
-            $this->RegisterVariableFloat('CurrentPercent', $this->Translate('Percent of the current Period'), '', 0);
-            $this->RegisterVariableFloat('LastPeriod', $this->Translate('Prediction of the last Period'), '', 1);
-            $this->RegisterVariableFloat('LastValue', $this->Translate('Value of the last Period'), '', 1);
-            $this->RegisterVariableFloat('LastPercent', $this->Translate('Percent of the last Period'), '', 1);
 
             //Timer
             $this->RegisterPropertyInteger('Interval', 5);
@@ -52,10 +44,12 @@ declare(strict_types=1);
             }
 
             //Variables
-            $this->RegisterVariableFloat('CurrentPeriod', $this->Translate('Prediction of the current Period'), $profile, 0);
+            $this->RegisterVariableFloat('CurrentPrediction', $this->Translate('Prediction of the current Period'), $profile, 0);
+            $this->RegisterVariableFloat('CurrentForecast', $this->Translate('Forecast of the current Period'), $profile, 0);
             $this->RegisterVariableFloat('CurrentValue', $this->Translate('Value of the current Period'), $profile, 0);
             $this->RegisterVariableFloat('CurrentPercent', $this->Translate('Percent of the current Period'), '~Valve.F', 0);
-            $this->RegisterVariableFloat('LastPeriod', $this->Translate('Prediction of the last Period'), $profile, 1);
+            $this->RegisterVariableFloat('LastPrediction', $this->Translate('Prediction of the last Period'), $profile, 1);
+            $this->RegisterVariableFloat('LastForecast', $this->Translate('Forecast of the last Period'), $profile, 1);
             $this->RegisterVariableFloat('LastValue', $this->Translate('Value of the last Period'), $profile, 1);
             $this->RegisterVariableFloat('LastPercent', $this->Translate('Percent of the last Period'), '~Valve.F', 1);
 
@@ -79,7 +73,7 @@ declare(strict_types=1);
 
             $archiveID = IPS_GetInstanceListByModuleID('{43192F0B-135B-4CE7-A0A7-1475603F3060}')[0];
 
-            $aggregationLevel = $this->ReadPropertyInteger('PeriodLevel');
+            $aggregationLevel = $this->ReadPropertyInteger('Period');
             switch ($aggregationLevel) {
                 case LVL_DAY:
                     $startTimeThisPeriod = strtotime('today 00:00:00', time());
@@ -117,7 +111,8 @@ declare(strict_types=1);
                 //status is set from calculate
                 return;
             }
-            $this->SetValue('CurrentPeriod', $list['prediction']);
+            $this->SetValue('CurrentPrediction', $list['prediction']);
+            $this->SetValue('CurrentForecast', $list['forecast']);
             $this->SetValue('CurrentPercent', $list['percent']);
             $this->SetValue('CurrentValue', $list['current']);
 
@@ -128,7 +123,8 @@ declare(strict_types=1);
                 //status is set from calculate
                 return;
             }
-            $this->SetValue('LastPeriod', $list['prediction']);
+            $this->SetValue('LastPrediction', $list['prediction']);
+            $this->SetValue('LastForecast', $list['forecast']);
             $this->SetValue('LastPercent', $list['percent']);
             $this->SetValue('LastValue', $list['current']);
         }

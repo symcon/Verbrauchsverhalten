@@ -172,23 +172,29 @@ declare(strict_types=1);
 
             //X = Outside,  Y = Counter
             $parameter = $this->linearRegression($valuesOutside, $valuesCounter);
-            $b = $parameter['b'];
-            $m = $parameter['m'];
 
             //Predict the Consumption
             $currentOutside = AC_GetAggregatedValues($archiveID, $outsideID, $aggregationLevel, $startTimePeriod, $endTimePeriod - 1, 1)[0];
-            $predictionPeriod = $m * $currentOutside['Avg'] + $b;
+            $predictionPeriod = $parameter['m'] * $currentOutside['Avg'] + $parameter['b'];
 
             $currentCounter = AC_GetAggregatedValues($archiveID, $counterID, $aggregationLevel, $startTimePeriod, $endTimePeriod - 1, 1)[0];
-            $predictionFullPeriod = $currentCounter['Avg'] / $currentCounter['Duration'] * ($endTimePeriod - $startTimePeriod);
-            $percent = ($predictionFullPeriod / $predictionPeriod) * 100;
+            $forecastPeriod = $currentCounter['Avg'] / $currentCounter['Duration'] * ($endTimePeriod - $startTimePeriod);
 
-            $currentCounter = $currentCounter['Avg'];
+            $percent = ($forecastPeriod / $predictionPeriod) * 100;
 
+            //Print some debug values
+            $this->SendDebug("Values", sizeof($valuesOutside), 0);
+            $this->SendDebug("OutsideTemperature", $currentOutside['Avg'], 0);
+            $this->SendDebug("B", $parameter['b'], 0);
+            $this->SendDebug("M", $parameter['m'], 0);
+            $this->SendDebug("Counter", $currentCounter['Avg'], 0);
+            $this->SendDebug("Forecast", $forecastPeriod, 0);
+            
             return [
                 'prediction'     => $predictionPeriod,
+                'forecast'       => $forecastPeriod,
                 'percent'        => $percent,
-                'current'        => $currentCounter,
+                'current'        => $currentCounter['Avg'],
             ];
         }
 

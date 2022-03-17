@@ -179,13 +179,13 @@ declare(strict_types=1);
             $percent = ($forecastPeriod / $predictionPeriod) * 100;
 
             //Print some debug values
-            $this->SendDebug("Values", sizeof($valuesOutside), 0);
-            $this->SendDebug("OutsideTemperature", $currentOutside['Avg'], 0);
-            $this->SendDebug("B", $parameter['b'], 0);
-            $this->SendDebug("M", $parameter['m'], 0);
-            $this->SendDebug("Counter", $currentCounter['Avg'], 0);
-            $this->SendDebug("Forecast", $forecastPeriod, 0);
-            
+            $this->SendDebug('Values', count($valuesOutside), 0);
+            $this->SendDebug('OutsideTemperature', $currentOutside['Avg'], 0);
+            $this->SendDebug('B', $parameter['b'], 0);
+            $this->SendDebug('M', $parameter['m'], 0);
+            $this->SendDebug('Counter', $currentCounter['Avg'], 0);
+            $this->SendDebug('Forecast', $forecastPeriod, 0);
+
             return [
                 'prediction'     => $predictionPeriod,
                 'forecast'       => $forecastPeriod,

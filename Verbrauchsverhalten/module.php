@@ -44,14 +44,14 @@ declare(strict_types=1);
             }
 
             //Variables
-            $this->RegisterVariableFloat('CurrentPrediction', $this->Translate('Prediction of the current Period'), $profile, 0);
-            $this->RegisterVariableFloat('CurrentForecast', $this->Translate('Forecast of the current Period'), $profile, 0);
-            $this->RegisterVariableFloat('CurrentValue', $this->Translate('Value of the current Period'), $profile, 0);
-            $this->RegisterVariableFloat('CurrentPercent', $this->Translate('Percent of the current Period'), '~Valve.F', 0);
-            $this->RegisterVariableFloat('LastPrediction', $this->Translate('Prediction of the last Period'), $profile, 1);
-            $this->RegisterVariableFloat('LastForecast', $this->Translate('Forecast of the last Period'), $profile, 1);
-            $this->RegisterVariableFloat('LastValue', $this->Translate('Value of the last Period'), $profile, 1);
-            $this->RegisterVariableFloat('LastPercent', $this->Translate('Percent of the last Period'), '~Valve.F', 1);
+            $this->RegisterVariableFloat('CurrentValue', $this->Translate('Value of the current Period'), $profile, 1);
+            $this->RegisterVariableFloat('CurrentForecast', $this->Translate('Forecast of the current Period'), $profile, 2);
+            $this->RegisterVariableFloat('CurrentPrediction', $this->Translate('Prediction of the current Period'), $profile, 3);
+            $this->RegisterVariableFloat('CurrentPercent', $this->Translate('Percent of the current Period'), '~Valve.F', 4);
+            $this->RegisterVariableFloat('LastValue', $this->Translate('Value of the last Period'), $profile, 5);
+            $this->RegisterVariableFloat('LastForecast', $this->Translate('Forecast of the last Period'), $profile, 6);
+            $this->RegisterVariableFloat('LastPrediction', $this->Translate('Prediction of the last Period'), $profile, 7);
+            $this->RegisterVariableFloat('LastPercent', $this->Translate('Percent of the last Period'), '~Valve.F', 8);
 
             $this->SetTimerInterval('UpdateCalculation', $this->ReadPropertyInteger('Interval') * 1000 * 60);
 

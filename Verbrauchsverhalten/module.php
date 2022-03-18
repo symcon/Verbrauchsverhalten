@@ -44,14 +44,16 @@ declare(strict_types=1);
             }
 
             //Variables
-            $this->RegisterVariableFloat('CurrentValue', $this->Translate('Value of the current Period'), $profile, 1);
-            $this->RegisterVariableFloat('CurrentForecast', $this->Translate('Forecast of the current Period'), $profile, 2);
-            $this->RegisterVariableFloat('CurrentPrediction', $this->Translate('Prediction of the current Period'), $profile, 3);
-            $this->RegisterVariableFloat('CurrentPercent', $this->Translate('Percent of the current Period'), '~Valve.F', 4);
-            $this->RegisterVariableFloat('LastValue', $this->Translate('Value of the last Period'), $profile, 5);
-            $this->RegisterVariableFloat('LastForecast', $this->Translate('Forecast of the last Period'), $profile, 6);
-            $this->RegisterVariableFloat('LastPrediction', $this->Translate('Prediction of the last Period'), $profile, 7);
-            $this->RegisterVariableFloat('LastPercent', $this->Translate('Percent of the last Period'), '~Valve.F', 8);
+            $this->RegisterVariableFloat('CurrentValue', $this->Translate('Value of the current Period'), $profile, 10);
+            $this->RegisterVariableFloat('CurrentForecast', $this->Translate('Forecast of the current Period'), $profile, 11);
+            $this->RegisterVariableFloat('CurrentPrediction', $this->Translate('Prediction of the current Period'), $profile, 12);
+            $this->RegisterVariableFloat('CurrentPercent', $this->Translate('Percent of the current Period'), '~Valve.F', 13);
+            $this->RegisterVariableFloat('CurrentCoD', $this->Translate('Coefficient of Determination of the current Period'), '', 14);
+            $this->RegisterVariableFloat('LastValue', $this->Translate('Value of the last Period'), $profile, 20);
+            $this->RegisterVariableFloat('LastForecast', $this->Translate('Forecast of the last Period'), $profile, 21);
+            $this->RegisterVariableFloat('LastPrediction', $this->Translate('Prediction of the last Period'), $profile, 22);
+            $this->RegisterVariableFloat('LastPercent', $this->Translate('Percent of the last Period'), '~Valve.F', 23);
+            $this->RegisterVariableFloat('LastCoD', $this->Translate('Coefficient of Determination of the last Period'), '', 24);
 
             $this->SetTimerInterval('UpdateCalculation', $this->ReadPropertyInteger('Interval') * 1000 * 60);
 
@@ -115,6 +117,7 @@ declare(strict_types=1);
             $this->SetValue('CurrentForecast', $list['forecast']);
             $this->SetValue('CurrentPercent', $list['percent']);
             $this->SetValue('CurrentValue', $list['current']);
+            $this->SetValue('CurrentCoD', $list['coefficientOfDetermination']);
 
             //Last period
             $list = $this->calculate($aggregationLevel, $outsideID, $counterID, $startTimeLastPeriod, $startTimeThisPeriod);
@@ -127,6 +130,7 @@ declare(strict_types=1);
             $this->SetValue('LastForecast', $list['forecast']);
             $this->SetValue('LastPercent', $list['percent']);
             $this->SetValue('LastValue', $list['current']);
+            $this->SetValue('LastCoD', $list['coefficientOfDetermination']);
         }
 
         private function calculate(int $aggregationLevel, int $outsideID, int $counterID, int $startTimePeriod, int $endTimePeriod)
@@ -183,14 +187,16 @@ declare(strict_types=1);
             $this->SendDebug('OutsideTemperature', $currentOutside['Avg'], 0);
             $this->SendDebug('B', $parameter['b'], 0);
             $this->SendDebug('M', $parameter['m'], 0);
+            $this->SendDebug('CoD', $parameter['coefficientOfDetermination'], 0);
             $this->SendDebug('Counter', $currentCounter['Avg'], 0);
             $this->SendDebug('Forecast', $forecastPeriod, 0);
 
             return [
-                'prediction'     => $predictionPeriod,
-                'forecast'       => $forecastPeriod,
-                'percent'        => $percent,
-                'current'        => $currentCounter['Avg'],
+                'prediction'                 => $predictionPeriod,
+                'forecast'                   => $forecastPeriod,
+                'percent'                    => $percent,
+                'current'                    => $currentCounter['Avg'],
+                'coefficientOfDetermination' => $parameter['coefficientOfDetermination'],
             ];
         }
 
@@ -215,11 +221,11 @@ declare(strict_types=1);
                 $sqr += pow(($valuesY[$i] - $beta0 - ($beta1 * $valuesX[$i])), 2);
                 $sqt += pow(($valuesY[$i] - $averageY), 2);
             }
-            $measureOfDetermination = 1 - ($sqr / $sqt);
+            $coefficientOfDetermination = 1 - ($sqr / $sqt);
             return [
-                'b'                     => $beta0,
-                'm'                     => $beta1,
-                'measureOfDetermination'=> $measureOfDetermination,
+                'b'                          => $beta0,
+                'm'                          => $beta1,
+                'coefficientOfDetermination' => $coefficientOfDetermination,
             ];
         }
     }

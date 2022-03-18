@@ -13,14 +13,16 @@
             "One of the Variable is not selected": "Eine der Variablen ist nicht gesetzt",
             "A variable has to few values or the limit is one": "Eine Variable hat zu wenig Werte oder das Limit ist eins",
             "The period level is not define": "Die Periodenlänge ist nicht definiert",
-            "Prediction of the current Period": "Erwartung der aktuellen Periode",
-            "Prediction of the last Period": "Erwartung der letzten Periode",
-            "Forecast of the current Period": "Hochrechnung der aktuellen Periode",
-            "Forecast of the last Period": "Hochrechnung der letzten Periode",
-            "Percent of the current Period": "Prozent der aktuellen Periode",
-            "Percent of the last Period": "Prozent der letzten Periode",
             "Value of the current Period": "Wert der aktuellen Periode",
             "Value of the last Period": "Wert der letzten Periode",
+            "Forecast of the current Period": "Hochrechnung der aktuellen Periode",
+            "Forecast of the last Period": "Hochrechnung der letzten Periode",
+            "Prediction of the current Period": "Erwartung der aktuellen Periode",
+            "Prediction of the last Period": "Erwartung der letzten Periode",
+            "Percent of the current Period": "Prozent der aktuellen Periode",
+            "Percent of the last Period": "Prozent der letzten Periode",
+            "Coefficient of Determination of the current Period": "Bestimmtheitsmaß der aktuellen Periode",
+            "Coefficient of Determination of the last Period": "Bestimmtheitsmaß der letzten Periode",
             "Limit of the amount of data sets": "Limit der Datensätze"
         }
     }

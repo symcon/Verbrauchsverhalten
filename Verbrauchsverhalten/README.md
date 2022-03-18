@@ -46,16 +46,18 @@ Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzeln
 
 #### Statusvariablen
 
-Name                             | Typ   | Beschreibung
---------------------------------- | ----- | ------------
-Erwartung der aktuelle Periode    | float | Zeigt den erwarteten Verbrauch auf Basis der Außentemperatur der laufenden Periode an
-Erwartung der letzten Periode     | float | Zeigt den erwarteten Verbrauch auf Basis der Außentemperatur der letzten Periode an
-Hochrechnung der aktuelle Periode | float | Zeigt den hochgerechneten Verbrauch der laufenden Periode an
-Hochrechnung der letzten Periode  | float | Zeigt den hochgerechneten Verbrauch der letzten Periode an
-Wert der aktuellen Periode        | float | Zeigt den aktuellen Verbrauch der laufenden Periode an
-Wert der letzten Periode          | float | Zeigt den Verbrauch der letzten Periode an
-Prozent der aktuellen Periode     | float | Zeigt in wie weit sich der hochgerechnete Verbrauch vom erwarteten Wert prozentual unterscheiden
-Prozent der letzten Periode       | float | Zeigt in wie weit sich der hochgerechnete Verbrauch vom erwarteten Wert prozentual unterscheiden
+Name                                   | Typ   | Beschreibung
+-------------------------------------- | ----- | ------------
+Erwartung der aktuelle Periode         | float | Zeigt den erwarteten Verbrauch auf Basis der Außentemperatur der laufenden Periode an
+Erwartung der letzten Periode          | float | Zeigt den erwarteten Verbrauch auf Basis der Außentemperatur der letzten Periode an
+Hochrechnung der aktuelle Periode      | float | Zeigt den hochgerechneten Verbrauch der laufenden Periode an
+Hochrechnung der letzten Periode       | float | Zeigt den hochgerechneten Verbrauch der letzten Periode an
+Wert der aktuellen Periode             | float | Zeigt den aktuellen Verbrauch der laufenden Periode an
+Wert der letzten Periode               | float | Zeigt den Verbrauch der letzten Periode an
+Prozent der aktuellen Periode          | float | Zeigt in wie weit sich der hochgerechnete Verbrauch vom erwarteten Wert prozentual unterscheiden
+Prozent der letzten Periode            | float | Zeigt in wie weit sich der hochgerechnete Verbrauch vom erwarteten Wert prozentual unterscheiden
+Bestimmtheitsmaß der aktuellen Periode | float | Bestimmtheitsmaß der Erwartungsberechnung der laufenden Periode an
+Bestimmtheitsmaß der letzten Periode   | float | Bestimmtheitsmaß der Erwartungsberechnung der letzten Periode an
 
 ### 6. WebFront
 

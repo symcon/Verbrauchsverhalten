@@ -65,15 +65,13 @@ declare(strict_types=1);
             $outsideID = $this->ReadPropertyInteger('OutsideTemperatureID');
             $counterID = $this->ReadPropertyInteger('CounterID');
 
-            if ($outsideID == 0 || $counterID == 0) {
+            if (!IPS_VariableExists($outsideID) || !IPS_VariableExists($counterID)) {
                 //No vars selected
                 $this->SetStatus(202);
                 return;
             } else {
                 $this->SetStatus(102);
             }
-
-            $archiveID = IPS_GetInstanceListByModuleID('{43192F0B-135B-4CE7-A0A7-1475603F3060}')[0];
 
             $aggregationLevel = $this->ReadPropertyInteger('Period');
             switch ($aggregationLevel) {
@@ -107,30 +105,30 @@ declare(strict_types=1);
             }
 
             //Current period
-            $list = $this->calculate($aggregationLevel, $outsideID, $counterID, $startTimeThisPeriod, $endTimeThisPeriod);
+            $arrayCurrent = $this->calculate($aggregationLevel, $outsideID, $counterID, $startTimeThisPeriod, $endTimeThisPeriod);
 
-            if ($list == []) {
+            if ($arrayCurrent == []) {
                 //status is set from calculate
                 return;
             }
-            $this->SetValue('CurrentPrediction', $list['prediction']);
-            $this->SetValue('CurrentForecast', $list['forecast']);
-            $this->SetValue('CurrentPercent', $list['percent']);
-            $this->SetValue('CurrentValue', $list['current']);
-            $this->SetValue('CurrentCoD', $list['coefficientOfDetermination']);
+            $this->SetValue('CurrentPrediction', $arrayCurrent['prediction']);
+            $this->SetValue('CurrentForecast', $arrayCurrent['forecast']);
+            $this->SetValue('CurrentPercent', $arrayCurrent['percent']);
+            $this->SetValue('CurrentValue', $arrayCurrent['current']);
+            $this->SetValue('CurrentCoD', $arrayCurrent['coefficientOfDetermination']);
 
             //Last period
-            $list = $this->calculate($aggregationLevel, $outsideID, $counterID, $startTimeLastPeriod, $startTimeThisPeriod);
+            $arrayLast = $this->calculate($aggregationLevel, $outsideID, $counterID, $startTimeLastPeriod, $startTimeThisPeriod);
 
-            if ($list == []) {
+            if ($arrayLast == []) {
                 //status is set from calculate
                 return;
             }
-            $this->SetValue('LastPrediction', $list['prediction']);
-            $this->SetValue('LastForecast', $list['forecast']);
-            $this->SetValue('LastPercent', $list['percent']);
-            $this->SetValue('LastValue', $list['current']);
-            $this->SetValue('LastCoD', $list['coefficientOfDetermination']);
+            $this->SetValue('LastPrediction', $arrayLast['prediction']);
+            $this->SetValue('LastForecast', $arrayLast['forecast']);
+            $this->SetValue('LastPercent', $arrayLast['percent']);
+            $this->SetValue('LastValue', $arrayLast['current']);
+            $this->SetValue('LastCoD', $arrayLast['coefficientOfDetermination']);
         }
 
         private function calculate(int $aggregationLevel, int $outsideID, int $counterID, int $startTimePeriod, int $endTimePeriod)

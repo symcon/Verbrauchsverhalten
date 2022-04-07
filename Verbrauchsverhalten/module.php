@@ -33,11 +33,13 @@ declare(strict_types=1);
             //Change Profile
             if ($this->ReadPropertyInteger('CounterID') != 0) {
                 $id = $this->ReadPropertyInteger('CounterID');
-
-                if (IPS_GetVariable($id)['VariableCustomProfile'] == '') {
-                    $profile = IPS_GetVariable($id)['VariableProfile'];
-                } else {
-                    $profile = IPS_GetVariable($id)['VariableCustomProfile'];
+                $variable = IPS_GetVariable($primaryPointID);
+                if ($variable['VariableType'] == VARIABLETYPE_FLOAT) {
+                    if (IPS_GetVariable($id)['VariableCustomProfile'] == '') {
+                        $profile = $variable['VariableProfile'];
+                    } else {
+                        $profile = $variable['VariableCustomProfile'];
+                    }
                 }
             } else {
                 $profile = '';

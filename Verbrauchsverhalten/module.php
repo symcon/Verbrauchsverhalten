@@ -31,18 +31,16 @@ declare(strict_types=1);
             parent::ApplyChanges();
 
             //Change Profile
+            $profile = '';
             if ($this->ReadPropertyInteger('CounterID') != 0) {
-                $id = $this->ReadPropertyInteger('CounterID');
-                $variable = IPS_GetVariable($id);
+                $variable = IPS_GetVariable($this->ReadPropertyInteger('CounterID'));
                 if ($variable['VariableType'] == VARIABLETYPE_FLOAT) {
-                    if (IPS_GetVariable($id)['VariableCustomProfile'] == '') {
+                    if ($variable['VariableCustomProfile'] == '') {
                         $profile = $variable['VariableProfile'];
                     } else {
                         $profile = $variable['VariableCustomProfile'];
                     }
                 }
-            } else {
-                $profile = '';
             }
 
             //Variables

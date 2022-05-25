@@ -33,11 +33,11 @@ __Konfigurationsseite__:
 
 Name                         | Beschreibung
 ---------------------------- | ------------------
-Variable für Außentemperatur | Variable für die Außentemperatur
-Variable für den Zähler      | Variable für den Zähler
+Variable für Außentemperatur | Geloggte Variable für die Außentemperatur
+Variable für den Zähler      | Geloggte Variable für den Zähler
 Periode                      | Zeitraum für den die Berechnung durchgeführt werden soll
 Limit                        | Maximale Anzahl der Datensätze die für die Regression genutzt werden sollen. 0 = Keine Limitierung
-Intervall                    | Zeitraum in dem die Variable neu berechnet werden soll
+Intervall                    | Zeitintervall des Timers in dem die Variable erneut berechnet werden soll
 Berechnen                    | Button, um die Variablen neu zu berechnen
 
 ### 5. Statusvariablen
@@ -56,8 +56,12 @@ Wert der aktuellen Periode             | float | Zeigt den aktuellen Verbrauch d
 Wert der letzten Periode               | float | Zeigt den Verbrauch der letzten Periode an
 Prozent der aktuellen Periode          | float | Zeigt in wie weit sich der hochgerechnete Verbrauch vom erwarteten Wert prozentual unterscheiden
 Prozent der letzten Periode            | float | Zeigt in wie weit sich der hochgerechnete Verbrauch vom erwarteten Wert prozentual unterscheiden
-Bestimmtheitsmaß der aktuellen Periode | float | Bestimmtheitsmaß der Erwartungsberechnung der laufenden Periode an
-Bestimmtheitsmaß der letzten Periode   | float | Bestimmtheitsmaß der Erwartungsberechnung der letzten Periode an
+Bestimmtheitsmaß der aktuellen Periode | float | Genauigkeit der Erwartungsberechnung der laufenden Periode an
+Bestimmtheitsmaß der letzten Periode   | float | Genauigkeit der Erwartungsberechnung der letzten Periode an
+
+
+Die Erwartung erfolgt anhand der einfachen linearen Regression. [Mathematisch Erklärt][https://de.wikipedia.org/wiki/Lineare_Einfachregression]
+Die Hochrechnung besteht wiederrum aus dem Durchschnittswert der Periode multipliziert mit der Periodenlänge. 
 
 ### 6. WebFront
 

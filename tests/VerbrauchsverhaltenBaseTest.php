@@ -346,7 +346,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
         IPS_ApplyChanges($instanceID);
 
         $this->assertEquals(102, IPS_GetInstance($instanceID)['InstanceStatus']);
-        
+
         //Test pairs
         $testMatrix = [
             //current
@@ -386,7 +386,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
         $aggregatedValueCounter = [
             [
                 'Avg'       => 6.75,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -395,7 +395,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 4.75,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -404,7 +404,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 5.75,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -413,7 +413,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 4.5,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -422,15 +422,15 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 0,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
                 'MinTime'   => 0,
                 'TimeStamp' => strtotime('May 19 1971 00:00:00')
-            ],[
+            ], [
                 'Avg'       => 6.75,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -439,7 +439,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 4.75,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -448,7 +448,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 5.75,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -457,7 +457,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 4.5,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -466,7 +466,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 0,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -475,7 +475,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 6.75,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -484,7 +484,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 4.75,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -493,7 +493,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 5.75,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -502,7 +502,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 4.5,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -511,7 +511,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 0,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -522,7 +522,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
         $aggregatedValueOutside = [
             [
                 'Avg'       => 1,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -531,7 +531,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 9,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -540,7 +540,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 5,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -549,7 +549,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 10,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -558,7 +558,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 36,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -567,7 +567,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 1,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -576,7 +576,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 9,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -585,7 +585,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 5,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -594,7 +594,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 10,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -603,7 +603,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 36,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -611,7 +611,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
                 'TimeStamp' => strtotime('April 19 1971 00:00:00')
             ], [
                 'Avg'       => 1,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -620,7 +620,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 9,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -629,7 +629,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 5,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -638,7 +638,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 10,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -647,7 +647,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
             ],
             [
                 'Avg'       => 36,
-                'Duration'  => 24 *60 * 60,
+                'Duration'  => 24 * 60 * 60,
                 'Max'       => 0,
                 'MaxTime'   => 0,
                 'Min'       => 0,
@@ -671,7 +671,7 @@ class VerbrauchsverhaltenBaseTest extends TestCase
         ]);
         IPS_SetConfiguration($instanceID, $configuration);
         IPS_ApplyChanges($instanceID);
-        
+
         $this->assertEquals(102, IPS_GetInstance($instanceID)['InstanceStatus']);
 
         //Test pairs

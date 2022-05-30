@@ -1,5 +1,5 @@
 # Verbrauchsverhalten
-Das Modul errechnet den wahrscheinlichen Verbrauch für diese Periode auf Basis einer Außentemperatur-Variable und einer Zähler-Variable mithilfe der Linearen Regression. Je mehr Werte für die Außentemperatur und den Zähler verfügbar sind, desto genauer kann der erwartete Verbrauch ermittelt werden.
+Das Modul errechnet den wahrscheinlichen Verbrauch für die Periode auf Basis einer Außentemperatur-Variable und einer Zähler-Variable mithilfe der Linearen Regression. Je mehr Werte für die Außentemperatur und den Zähler verfügbar sind, desto genauer kann der erwartete Verbrauch ermittelt werden.
 
 ### Inhaltsverzeichnis
 
@@ -18,6 +18,7 @@ Das Modul errechnet den wahrscheinlichen Verbrauch für diese Periode auf Basis 
 ### 2. Voraussetzungen
 
 - IP-Symcon ab Version 6.0
+- mindestens 2 Datensätze für 3 aufeinderfolgenden Perioden
 
 ### 3. Software-Installation
 
@@ -40,6 +41,10 @@ Limit                        | Maximale Anzahl der Datensätze die für die Regr
 Intervall                    | Zeitintervall des Timers in dem die Variable erneut berechnet werden soll
 Berechnen                    | Button, um die Variablen neu zu berechnen
 
+
+Für Periode *Tag* wird die stündliche Aggregation der Variablen genutzt.
+Für alle anderen Perioden wird die tägliche Aggregation der Variablen genutzt. 
+
 ### 5. Statusvariablen
 
 Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzelner kann zu Fehlfunktionen führen.
@@ -60,7 +65,10 @@ Bestimmtheitsmaß der aktuellen Periode | float | Genauigkeit der Erwartungsbere
 Bestimmtheitsmaß der letzten Periode   | float | Genauigkeit der Erwartungsberechnung der letzten Periode an
 
 
+#### Mathematische Formeln
 Die Erwartung erfolgt anhand der einfachen linearen Regression. [Mathematisch Erklärt][https://de.wikipedia.org/wiki/Lineare_Einfachregression]
+Hier wird die Summe des positiven Ergebnis aus der Rechnung m * Temperaturdurchschnit (je nach Periodendauer) * b errechnet. m und b werden durch die linearen Regression bestimmt.  
+
 Die Hochrechnung besteht wiederrum aus dem Durchschnittswert der Periode multipliziert mit der Periodenlänge. 
 
 ### 6. WebFront

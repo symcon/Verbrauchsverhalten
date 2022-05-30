@@ -1,5 +1,5 @@
 # Verbrauchsverhalten
-Das Modul errechnet den wahrscheinlichen Verbrauch für diese Periode auf Basis einer Außentemperatur-Variable und einer Zähler-Variable mithilfe der Linearen Regression. Je mehr Werte für die Außentemperatur und den Zähler verfügbar sind, desto genauer kann der erwartete Verbrauch ermittelt werden.
+Das Modul errechnet den wahrscheinlichen Verbrauch für die Periode auf Basis einer Außentemperatur-Variable und einer Zähler-Variable mithilfe der Linearen Regression. Je mehr Werte für die Außentemperatur und den Zähler verfügbar sind, desto genauer kann der erwartete Verbrauch ermittelt werden.
 
 ### Inhaltsverzeichnis
 
@@ -18,6 +18,7 @@ Das Modul errechnet den wahrscheinlichen Verbrauch für diese Periode auf Basis 
 ### 2. Voraussetzungen
 
 - IP-Symcon ab Version 6.0
+- mindestens 2 Datensätze für 3 aufeinderfolgenden Perioden
 
 ### 3. Software-Installation
 
@@ -33,12 +34,16 @@ __Konfigurationsseite__:
 
 Name                         | Beschreibung
 ---------------------------- | ------------------
-Variable für Außentemperatur | Variable für die Außentemperatur
-Variable für den Zähler      | Variable für den Zähler
+Variable für Außentemperatur | Geloggte Variable für die Außentemperatur
+Variable für den Zähler      | Geloggte Variable für den Zähler
 Periode                      | Zeitraum für den die Berechnung durchgeführt werden soll
 Limit                        | Maximale Anzahl der Datensätze die für die Regression genutzt werden sollen. 0 = Keine Limitierung
-Intervall                    | Zeitraum in dem die Variable neu berechnet werden soll
+Intervall                    | Zeitintervall des Timers in dem die Variable erneut berechnet werden soll
 Berechnen                    | Button, um die Variablen neu zu berechnen
+
+
+Für Periode *Tag* wird die stündliche Aggregation der Variablen genutzt.
+Für alle anderen Perioden wird die tägliche Aggregation der Variablen genutzt. 
 
 ### 5. Statusvariablen
 
@@ -56,8 +61,15 @@ Wert der aktuellen Periode             | float | Zeigt den aktuellen Verbrauch d
 Wert der letzten Periode               | float | Zeigt den Verbrauch der letzten Periode an
 Prozent der aktuellen Periode          | float | Zeigt in wie weit sich der hochgerechnete Verbrauch vom erwarteten Wert prozentual unterscheiden
 Prozent der letzten Periode            | float | Zeigt in wie weit sich der hochgerechnete Verbrauch vom erwarteten Wert prozentual unterscheiden
-Bestimmtheitsmaß der aktuellen Periode | float | Bestimmtheitsmaß der Erwartungsberechnung der laufenden Periode an
-Bestimmtheitsmaß der letzten Periode   | float | Bestimmtheitsmaß der Erwartungsberechnung der letzten Periode an
+Bestimmtheitsmaß der aktuellen Periode | float | Genauigkeit der Erwartungsberechnung der laufenden Periode an
+Bestimmtheitsmaß der letzten Periode   | float | Genauigkeit der Erwartungsberechnung der letzten Periode an
+
+
+#### Mathematische Formeln
+Die Erwartung erfolgt anhand der einfachen linearen Regression. [Mathematisch Erklärt][https://de.wikipedia.org/wiki/Lineare_Einfachregression]
+Hier wird die Summe des positiven Ergebnis aus der Rechnung m * Temperaturdurchschnit (je nach Periodendauer) * b errechnet. m und b werden durch die linearen Regression bestimmt.  
+
+Die Hochrechnung besteht wiederrum aus dem Durchschnittswert der Periode multipliziert mit der Periodenlänge. 
 
 ### 6. WebFront
 

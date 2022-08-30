@@ -201,13 +201,13 @@ include_once __DIR__ . '/timetest.php';
             $percent = ($forecastPeriod / $predictionPeriod) * 100;
 
             //Print some debug values
-            $this->SendDebug('Values', '' . count($valuesOutside), 0);
-            $this->SendDebug('CounterPrediction', '' . $predictionPeriod, 0);
-            $this->SendDebug('B', '' . $parameter['b'], 0);
-            $this->SendDebug('M', '' . $parameter['m'], 0);
-            $this->SendDebug('CoD', '' . $parameter['coefficientOfDetermination'], 0);
-            $this->SendDebug('Counter', '' . $counter, 0);
-            $this->SendDebug('Forecast', '' . $forecastPeriod, 0);
+            $this->SendDebug('Values', count($valuesOutside), 0);
+            $this->SendDebug('CounterPrediction', $predictionPeriod, 0);
+            $this->SendDebug('B', $parameter['b'], 0);
+            $this->SendDebug('M', $parameter['m'], 0);
+            $this->SendDebug('CoD', $parameter['coefficientOfDetermination'], 0);
+            $this->SendDebug('Counter', $counter, 0);
+            $this->SendDebug('Forecast', $forecastPeriod, 0);
 
             return [
                 'prediction'                 => $predictionPeriod,

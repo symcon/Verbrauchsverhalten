@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+include_once __DIR__ . '/timetest.php';
+
+    define('LVL_HOUR', 0);
     define('LVL_DAY', 1);
     define('LVL_WEEK', 2);
     define('LVL_MONTH', 3);
@@ -9,6 +12,7 @@ declare(strict_types=1);
 
     class Verbrauchsverhalten extends IPSModule
     {
+        use TestTime;
         public function Create()
         {
             //Diese Zeile nicht löschen.
@@ -73,30 +77,34 @@ declare(strict_types=1);
                 $this->SetStatus(102);
             }
 
-            $aggregationLevel = $this->ReadPropertyInteger('Period');
-            switch ($aggregationLevel) {
+            $period = $this->ReadPropertyInteger('Period');
+            switch ($period) {
                 case LVL_DAY:
-                    $startTimeThisPeriod = strtotime('today 00:00:00', time());
+                    $startTimeThisPeriod = strtotime('today 00:00:00', $this->getTime());
                     $startTimeLastPeriod = strtotime('-1 day', $startTimeThisPeriod);
                     $endTimeThisPeriod = strtotime('+1 day', $startTimeThisPeriod);
+                    $aggregationLevel = LVL_HOUR;
                     break;
 
                 case LVL_WEEK:
-                    $startTimeThisPeriod = strtotime('monday this week 00:00:00', time());
+                    $startTimeThisPeriod = strtotime('monday this week 00:00:00', $this->getTime());
                     $startTimeLastPeriod = strtotime('-1 week', $startTimeThisPeriod);
                     $endTimeThisPeriod = strtotime('+1 week', $startTimeThisPeriod);
+                    $aggregationLevel = LVL_DAY;
                     break;
 
                 case LVL_MONTH:
-                    $startTimeThisPeriod = strtotime('first day of this month 00:00:00', time());
+                    $startTimeThisPeriod = strtotime('first day of this month 00:00:00', $this->getTime());
                     $startTimeLastPeriod = strtotime('-1 month', $startTimeThisPeriod);
                     $endTimeThisPeriod = strtotime('+1 month', $startTimeThisPeriod);
+                    $aggregationLevel = LVL_DAY;
                     break;
 
                 case LVL_YEAR:
-                    $startTimeThisPeriod = strtotime('first day of january 00:00:00', time());
+                    $startTimeThisPeriod = strtotime('first day of january 00:00:00', $this->getTime());
                     $startTimeLastPeriod = strtotime('-1 year', $startTimeThisPeriod);
                     $endTimeThisPeriod = strtotime('+1 year', $startTimeThisPeriod);
+                    $aggregationLevel = LVL_DAY;
                     break;
 
                 default:
@@ -172,28 +180,40 @@ declare(strict_types=1);
             $parameter = $this->linearRegression($valuesOutside, $valuesCounter);
 
             //Predict the Consumption
-            $currentOutside = AC_GetAggregatedValues($archiveID, $outsideID, $aggregationLevel, $startTimePeriod, $endTimePeriod - 1, 1)[0];
-            $predictionPeriod = $parameter['m'] * $currentOutside['Avg'] + $parameter['b'];
+            $currentPeriodOutside = AC_GetAggregatedValues($archiveID, $outsideID, $aggregationLevel, $startTimePeriod, $endTimePeriod - 1, 0);
+            $predictionPeriod = 0;
+            foreach ($currentPeriodOutside as $point) {
+                $prediction = $parameter['m'] * $point['Avg'] + $parameter['b'];
+                if ($prediction > 0) {
+                    $predictionPeriod += $prediction;
+                }
+            }
 
-            $currentCounter = AC_GetAggregatedValues($archiveID, $counterID, $aggregationLevel, $startTimePeriod, $endTimePeriod - 1, 1)[0];
-            $forecastPeriod = $currentCounter['Avg'] / $currentCounter['Duration'] * ($endTimePeriod - $startTimePeriod);
+            $currentCounter = AC_GetAggregatedValues($archiveID, $counterID, $aggregationLevel, $startTimePeriod, $endTimePeriod - 1, 0);
+
+            $counter = 0;
+
+            foreach ($currentCounter as $point) {
+                $counter += $point['Avg'];
+            }
+            $forecastPeriod = $counter / ($this->getTime() - $startTimePeriod) * ($endTimePeriod - $startTimePeriod);
 
             $percent = ($forecastPeriod / $predictionPeriod) * 100;
 
             //Print some debug values
-            $this->SendDebug('Values', count($valuesOutside), 0);
-            $this->SendDebug('OutsideTemperature', $currentOutside['Avg'], 0);
-            $this->SendDebug('B', $parameter['b'], 0);
-            $this->SendDebug('M', $parameter['m'], 0);
-            $this->SendDebug('CoD', $parameter['coefficientOfDetermination'], 0);
-            $this->SendDebug('Counter', $currentCounter['Avg'], 0);
-            $this->SendDebug('Forecast', $forecastPeriod, 0);
+            $this->SendDebug('Values', strval(count($valuesOutside)), 0);
+            $this->SendDebug('CounterPrediction', strval($predictionPeriod), 0);
+            $this->SendDebug('B', strval($parameter['b']), 0);
+            $this->SendDebug('M', strval($parameter['m']), 0);
+            $this->SendDebug('CoD', strval($parameter['coefficientOfDetermination']), 0);
+            $this->SendDebug('Counter', strval($counter), 0);
+            $this->SendDebug('Forecast', strval($forecastPeriod), 0);
 
             return [
                 'prediction'                 => $predictionPeriod,
                 'forecast'                   => $forecastPeriod,
                 'percent'                    => $percent,
-                'current'                    => $currentCounter['Avg'],
+                'current'                    => $counter,
                 'coefficientOfDetermination' => $parameter['coefficientOfDetermination'],
             ];
         }

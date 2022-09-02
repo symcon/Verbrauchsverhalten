@@ -18,7 +18,6 @@ Das Modul errechnet den wahrscheinlichen Verbrauch für die Periode auf Basis ei
 ### 2. Voraussetzungen
 
 - IP-Symcon ab Version 6.0
-- mindestens 2 Datensätze für 3 aufeinderfolgenden Perioden
 
 ### 3. Software-Installation
 
@@ -42,6 +41,7 @@ Intervall                    | Zeitintervall des Timers in dem die Variable erne
 Berechnen                    | Button, um die Variablen neu zu berechnen
 
 
+Für die Zählervariable müssen mindestens 2 Datensätze für 3 aufeinderfolgenden Perioden vorhanden sein, damit eine Berechnung erfolgen kann.
 Für Periode *Tag* wird die stündliche Aggregation der Variablen genutzt.
 Für alle anderen Perioden wird die tägliche Aggregation der Variablen genutzt. 
 

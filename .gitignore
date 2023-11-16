@@ -1,1 +1,2 @@
 tests/.phpunit.*
+.php-cs-fixer.cache

@@ -1,10 +1,10 @@
 {
     "id": "{EE2368AF-2347-4F90-31B8-861861F060DE}",
-    "name": "Verbrauchsverhalten",
+    "name": "Consumption Behaviour",
     "type": 3,
     "vendor": "",
     "aliases": [],
-    "url": "https://github.com/symcon/Verbrauchsverhalten/tree/master/Verbrauchsverhalten",
+    "url": "https://www.symcon.de/en/service/documentation/module-reference/consumptionbehaviour/",
     "parentRequirements": [],
     "childRequirements": [],
     "implemented": [],

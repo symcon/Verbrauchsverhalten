@@ -23,7 +23,9 @@
             "Percent of the last Period": "Prozent der letzten Periode",
             "Coefficient of Determination of the current Period": "Bestimmtheitsmaß der aktuellen Periode",
             "Coefficient of Determination of the last Period": "Bestimmtheitsmaß der letzten Periode",
-            "Limit of the amount of data sets": "Limit der Datensätze"
+            "Limit of the amount of data sets": "Limit der Datensätze",
+            "https://www.symcon.de/en/service/documentation/module-reference/consumptionbehaviour/": "https://www.symcon.de/de/service/dokumentation/modulreferenz/verbrauchsverhalten/",
+            "Consumption Behaviour": "Verbrauchsverhalten"
         }
     }
 }

@@ -10,7 +10,7 @@ define('LVL_WEEK', 2);
 define('LVL_MONTH', 3);
 define('LVL_YEAR', 4);
 
-class Verbrauchsverhalten extends IPSModule
+class ConsumptionBehaviour extends IPSModule
 {
     use TestTime;
     public function Create()

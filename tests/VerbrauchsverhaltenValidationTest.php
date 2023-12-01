@@ -8,8 +8,8 @@ class VerbrauchsverhaltenValidationTest extends TestCaseSymconValidation
     {
         $this->validateLibrary(__DIR__ . '/..');
     }
-    public function testValidateVerbrauchsverhaltenModule(): void
+    public function testValidateConsumptionBehaviourModule(): void
     {
-        $this->validateModule(__DIR__ . '/../Verbrauchsverhalten');
+        $this->validateModule(__DIR__ . '/../ConsumptionBehaviour');
     }
 }
